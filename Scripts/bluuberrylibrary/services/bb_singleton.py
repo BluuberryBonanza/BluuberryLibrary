@@ -30,14 +30,14 @@ class BBSingleton(metaclass=_Singleton):
     .. highlight:: python
     .. code-block:: python
 
-        class ExampleSingleton(BBSingleton):
-            @property
-            def first_value(self) -> str:
-                return 'yes'
+        class Foo(BBSingleton):
+            def __init__(self):
+                self.state = 0
 
-        # ExampleSingleton() returns an instance of ExampleSingleton.
-        # Calling ExampleSingleton() again, will return the same instance.
-        ExampleSingleton().first_value
+        f = Foo()
+        f.state = 3
+        g = Foo()
+        g.state == 3  # True
 
     """
     pass
