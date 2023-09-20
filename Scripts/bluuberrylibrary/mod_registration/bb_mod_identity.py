@@ -8,7 +8,7 @@ Copyright (c) BLUUBERRYBONANZA
 from bluuberrylibrary.services.bb_singleton import BBSingleton
 
 
-class BBModIdentity(BBSingleton):
+class BBModIdentity(metaclass=BBSingleton):
     """Includes the identity of your mod.
 
     .. note:: It contains information about a mod such as Mod Name, Mod Author,\

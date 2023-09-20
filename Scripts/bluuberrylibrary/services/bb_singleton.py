@@ -10,27 +10,17 @@ from typing import TypeVar
 SingletonType = TypeVar('SingletonType', bound=object)
 
 
-class _Singleton(type):
-    def __init__(cls, *args, **kwargs) -> None:
-        super(_Singleton, cls).__init__(*args, **kwargs)
-        cls._instances = {}
-
-    def __call__(cls, *args, **kwargs) -> 'BBSingleton':
-        if cls not in cls._instances:
-            cls._instances[cls] = super(_Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class BBSingleton(metaclass=_Singleton):
+class BBSingleton(type):
     """Any instances created using this class will be of a single instance.
 
+    Usage: class Foo(metaclass=BBSingleton):
 
     :Example usage:
 
     .. highlight:: python
     .. code-block:: python
 
-        class Foo(BBSingleton):
+        class Foo(metaclass=BBSingleton):
             def __init__(self):
                 self.state = 0
 
@@ -40,4 +30,11 @@ class BBSingleton(metaclass=_Singleton):
         g.state == 3  # True
 
     """
-    pass
+    def __init__(cls, *args, **kwargs) -> None:
+        super(BBSingleton, cls).__init__(*args, **kwargs)
+        cls._instances = {}
+
+    def __call__(cls, *args, **kwargs) -> 'BBSingleton':
+        if cls not in cls._instances:
+            cls._instances[cls] = super(BBSingleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]

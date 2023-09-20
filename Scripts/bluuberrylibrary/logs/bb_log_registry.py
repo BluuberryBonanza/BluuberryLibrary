@@ -16,7 +16,7 @@ from bluuberrylibrary.services.bb_singleton import BBSingleton
 _bb_base_log = None
 
 
-class BBLogRegistry(BBSingleton):
+class BBLogRegistry(metaclass=BBSingleton):
     """BBLogRegistry()
 
     Used to create and register logs.
