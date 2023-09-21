@@ -11,7 +11,7 @@ from typing import Dict
 from bluuberrylibrary.logs.bb_log import BBLog
 from bluuberrylibrary.mod_identity import ModIdentity
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
-from bluuberrylibrary.services.bb_singleton import BBSingleton
+from bluuberrylibrary.classes.bb_singleton import BBSingleton
 
 _bb_base_log = None
 
@@ -53,8 +53,8 @@ class BBLogRegistry(metaclass=BBSingleton):
 
     @classmethod
     def _logging_folder_path(cls) -> str:
-        from bluuberrylibrary.utils.file.bb_file_utils import BBFileUtils
-        return os.path.join(BBFileUtils.get_the_sims_4_file_path(), 'bb_logs')
+        from bluuberrylibrary.utils.file.bb_game_file_utils import BBGameFileUtils
+        return os.path.join(BBGameFileUtils.get_the_sims_4_file_path(), 'bb_logs')
 
     def _delete_old_log_files(self) -> None:
         from bluuberrylibrary.utils.file.bb_file_utils import BBFileUtils

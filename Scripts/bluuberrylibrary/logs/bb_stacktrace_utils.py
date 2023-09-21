@@ -14,7 +14,7 @@ from typing import Any, List
 FullTraceback = namedtuple('FullTraceback', ('tb_frame', 'tb_lineno', 'tb_next'))
 
 
-class BBStacktraceUtil:
+class BBStacktraceUtils:
     """Utilities for accessing the stack trace of your mod.
 
     """

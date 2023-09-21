@@ -10,7 +10,7 @@ from pprint import pformat
 from typing import List
 
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
-from bluuberrylibrary.logs.bb_stacktrace_utils import BBStacktraceUtil
+from bluuberrylibrary.logs.bb_stacktrace_utils import BBStacktraceUtils
 from bluuberrylibrary.utils.file.bb_file_utils import BBFileUtils
 from bluuberrylibrary.utils.time.bb_date_utils import BBDateTimeUtils
 
@@ -57,9 +57,9 @@ class BBLog:
         ignore_enabled: bool = False,
         **kwargs
     ):
-        """debug(message, **kwargs)
+        """debug(message, ignore_enabled=False, **kwargs)
 
-        Log text to a log file.
+        Log a message.
 
         :param message: The message to log.
         :type message: str
@@ -83,7 +83,7 @@ class BBLog:
     ):
         """error(message, exception=None, stack_trace=None, **kwargs)
 
-        Log an error to the log file.
+        Log an error.
 
         :param message: The message to log.
         :type message: str
@@ -115,24 +115,32 @@ class BBLog:
     def enable(self) -> None:
         """enable()
 
-        Enable the log to start logging.
+        Enable the log.
         """
         self._is_enabled = True
 
     def disable(self) -> None:
         """disable()
 
-        Disable the log to stop logging.
+        Disable the log.
         """
         self._is_enabled = False
 
     def is_enabled(self) -> bool:
+        """is_enabled()
+
+        Determine if the log is enabled.
+
+        :return: True, if the log is enabled. False, if not.
+        :rtype: bool
+        """
         return self._is_enabled
 
     def __logging_file_path(self) -> str:
         if self._logging_file_path:
             return os.path.join(self._logging_file_path, 'bb_logs')
-        return os.path.join(BBFileUtils.get_the_sims_4_file_path(), 'bb_logs')
+        from bluuberrylibrary.utils.file.bb_game_file_utils import BBGameFileUtils
+        return os.path.join(BBGameFileUtils.get_the_sims_4_file_path(), 'bb_logs')
 
     def _debug_file_name(self) -> str:
         return '{}_{}_Debug.txt'.format(self._mod_identity.mod_name, self._mod_identity.mod_version)
@@ -154,7 +162,7 @@ class BBLog:
     def _log_error(self, message: str, file_name: str = None, exception: Exception = None, stack_trace: List[str] = None):
         # noinspection PyBroadException
         try:
-            exceptions = stack_trace or BBStacktraceUtil.get_full_stack_trace()
+            exceptions = stack_trace or BBStacktraceUtils.get_full_stack_trace()
             if exception is not None:
                 stack_trace_message = '{}{} -> {}: {}\n'.format(''.join(exceptions), message, type(exception).__name__, exception)
             else:

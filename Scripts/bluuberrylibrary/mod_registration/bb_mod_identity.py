@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from bluuberrylibrary.services.bb_singleton import BBSingleton
+from bluuberrylibrary.classes.bb_singleton import BBSingleton
 
 
 class BBModIdentity(metaclass=BBSingleton):

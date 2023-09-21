@@ -3,7 +3,7 @@ from compile_utils import _remove_files_conflicting_with_decompile, _replace_ren
 _remove_files_conflicting_with_decompile(decompile_ea_scripts=False)
 
 import traceback
-from typing import Iterator
+from typing import Iterator, Tuple
 from zipfile import PyZipFile
 
 from settings import *
@@ -14,7 +14,7 @@ class Unpyc3PythonCompiler:
     @classmethod
     def compile_mod(
         cls,
-        names_of_modules_include: Iterator[str],
+        names_of_modules_include: Tuple[str],
         folder_path_to_output_ts4script_to: str,
         output_ts4script_name: str,
         names_of_modules_to_exclude: str=None,
