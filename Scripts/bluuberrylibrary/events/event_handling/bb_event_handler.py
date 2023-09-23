@@ -71,7 +71,7 @@ class BBEventHandler:
         return self._event_type
 
     def can_handle(self, event: BBEvent) -> bool:
-        return type(event) == self.event_type
+        return isinstance(event, self.event_type)
 
     def handle(self, event: BBEvent) -> TestResult:
         return self._handler(event)

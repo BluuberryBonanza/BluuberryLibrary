@@ -95,9 +95,9 @@ class BBLog:
         :type kwargs: Any
         """
         if kwargs:
-            self._log_error('ERROR', '{} {}'.format(message, pformat(kwargs)), exception=exception, stack_trace=stack_trace)
+            self._log_error('{} {}'.format(message, pformat(kwargs)), exception=exception, stack_trace=stack_trace)
         else:
-            self._log_error('ERROR', message, exception=exception, stack_trace=stack_trace)
+            self._log_error(message, exception=exception, stack_trace=stack_trace)
 
     def log_stack(self) -> None:
         """log_stack()
@@ -143,10 +143,10 @@ class BBLog:
         return os.path.join(BBGameFileUtils.get_the_sims_4_file_path(), 'bb_logs')
 
     def _debug_file_name(self) -> str:
-        return '{}_{}_Debug.txt'.format(self._mod_identity.mod_name, self._mod_identity.mod_version)
+        return '{}_{}_Debug.txt'.format(self.mod_name, self._mod_identity.mod_version)
 
     def _error_file_name(self) -> str:
-        return '{}_{}_Exceptions.txt'.format(self._mod_identity.mod_name, self._mod_identity.mod_version)
+        return '{}_{}_Exceptions.txt'.format(self.mod_name, self._mod_identity.mod_version)
 
     def _log_text(self, message_type: str, message: str, file_name: str = None):
         current_date_time_str = BBDateTimeUtils.get_current_real_date_time_string()
