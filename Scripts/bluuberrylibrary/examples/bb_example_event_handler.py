@@ -12,6 +12,7 @@ from bluuberrylibrary.mod_identity import ModIdentity
 from event_testing.results import TestResult
 
 
+# This function runs when the zone finishes loading. It will then print "Ran load event" to the log.
 @BBEventHandlerRegistry.register(ModIdentity(), BBOnZoneLoadEndEvent)
 def _bbl_example_on_zone_load_end_event(event: BBOnZoneLoadEndEvent):
     log = BBLogRegistry().register_log(ModIdentity(), 'bb_example_events')
