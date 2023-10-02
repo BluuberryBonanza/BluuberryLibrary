@@ -17,6 +17,18 @@ class BBPhoneInteractionHandler(BBInteractionHandler):
 
     A handler for registering interactions on the Phone.
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBInteractionRegistry.register()
+        class _ExamplePhoneInteractionRegistration(BBPhoneInteractionHandler):
+
+            @property
+            def interaction_guids(self) -> Tuple[int]:
+                return (
+                    12345,
+                )
+
     """
     @property
     def registration_location(self) -> BBInteractionLocation:

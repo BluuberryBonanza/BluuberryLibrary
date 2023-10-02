@@ -18,6 +18,25 @@ class BBSimInteractionHandler(BBInteractionHandler):
 
     A handler for registering interactions on Sims.
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBInteractionRegistry.register()
+        class _ExampleSimInteractionRegistration(BBSimInteractionHandler):
+
+            @property
+            def interaction_guids(self) -> Tuple[int]:
+                return (
+                    12345,
+                )
+
+            def should_register(self, sim: Sim) -> bool:
+                super_result = super().should_register(sim)
+                if not super_result:
+                    return super_result
+                # Only register these interactions to Young Adult Sims.
+                return sim.age == Age.YOUNGADULT
+
     """
     @property
     def registration_location(self) -> BBInteractionLocation:

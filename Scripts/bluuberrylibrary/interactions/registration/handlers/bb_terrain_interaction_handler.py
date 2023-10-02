@@ -17,6 +17,18 @@ class BBTerrainInteractionHandler(BBInteractionHandler):
 
     A handler for registering interactions on the Terrain (Does not include Oceans).
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBInteractionRegistry.register()
+        class _ExampleTerrainInteractionRegistration(BBTerrainInteractionHandler):
+
+            @property
+            def interaction_guids(self) -> Tuple[int]:
+                return (
+                    12345,
+                )
+
     """
     @property
     def registration_location(self) -> BBInteractionLocation:

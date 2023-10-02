@@ -19,6 +19,12 @@ class BBEventHandlerRegistry(metaclass=BBSingleton):
     @BBEventHandlerRegistry().register(ModIdentity(), BBEvent())
     def _bbl_handle_on_zone_load_event(event: BBEvent):
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBEventHandlerRegistry().register(ModIdentity(), BBEvent())
+        def _bbl_handle_on_zone_load_event(event: BBEvent):
+
     """
     def __init__(self):
         self._event_handlers: List[BBEventHandler] = []

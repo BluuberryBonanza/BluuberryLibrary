@@ -20,6 +20,25 @@ class BBObjectInteractionHandler(BBInteractionHandler):
 
     A handler for registering interactions on Game Objects that are not Sims.
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBInteractionRegistry.register()
+        class _ExampleObjectInteractionRegistration(BBObjectInteractionHandler):
+
+            @property
+            def interaction_guids(self) -> Tuple[int]:
+                return (
+                    12345,
+                )
+
+            def should_register(self, game_object: GameObject) -> bool:
+                super_result = super().should_register(game_object)
+                if not super_result:
+                    return super_result
+                # If matches specific id.
+                return game_object.id == 5678
+
     """
     @property
     def registration_location(self) -> BBInteractionLocation:

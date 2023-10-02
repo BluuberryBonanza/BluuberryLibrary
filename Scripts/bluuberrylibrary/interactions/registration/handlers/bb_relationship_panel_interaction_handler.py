@@ -17,6 +17,18 @@ class BBRelationshipPanelInteractionHandler(BBInteractionHandler):
 
     A handler for registering interactions on the Relationship Panel.
 
+    .. highlight:: python
+    .. code-block:: python
+
+        @BBInteractionRegistry.register()
+        class _ExampleRelationshipPanelInteractionRegistration(BBRelationshipPanelInteractionHandler):
+
+            @property
+            def interaction_guids(self) -> Tuple[int]:
+                return (
+                    12345,
+                )
+
     """
     @property
     def registration_location(self) -> BBInteractionLocation:
