@@ -9,6 +9,7 @@ from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
 
 
 class BBEvent:
+    """An event dispatched by event handlers. It will be used to notify any functions listening for it."""
     def __init__(self, mod_identity: BBModIdentity):
         self._mod_identity = mod_identity
 

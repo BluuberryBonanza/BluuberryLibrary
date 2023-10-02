@@ -20,6 +20,7 @@ from sims.sim_info import SimInfo
 
 
 class BBImmediateSuperInteraction(ImmediateSuperInteraction):
+    """An interaction that occurs immediately when the player selects it. The Sim will not queue it."""
     @classmethod
     def get_mod_identity(cls) -> BBModIdentity:
         """The identity of the mod that owns this class."""

@@ -8,4 +8,5 @@ Copyright (c) BLUUBERRYBONANZA
 
 
 class BBLInteractionIds:
+    """Decimal identifiers for interactions."""
     BBL_DEBUG_SHOW_INTERACTIONS = 8797660560097704693

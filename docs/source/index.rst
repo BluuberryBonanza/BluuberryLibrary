@@ -1,13 +1,10 @@
-Welcome to Lumache's documentation!
+Welcome to BluuberryLibrary's documentation!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**BluuberryLibrary** (/lu'make/) is a Python library for creating Script mods in The Sims 4
+It offers a wide range of utilities and classes for making script mods easier to both make and manage.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Check out the sections on the left or below for various utilities.
 
 .. note::
 
@@ -18,5 +15,16 @@ Contents
 
 .. toctree::
 
-   usage
-   api
+   bluuberrylibrary.classes
+   bluuberrylibrary.enums
+   bluuberrylibrary.events.event_handling
+   bluuberrylibrary.events.event_dispatchers.zone
+   bluuberrylibrary.interactions.classes
+   bluuberrylibrary.interactions.registration
+   bluuberrylibrary.logs
+   bluuberrylibrary.mod_registration
+   bluuberrylibrary.utils.debug
+   bluuberrylibrary.utils.file
+   bluuberrylibrary.utils.instances
+   bluuberrylibrary.utils.sims
+   bluuberrylibrary.utils.time

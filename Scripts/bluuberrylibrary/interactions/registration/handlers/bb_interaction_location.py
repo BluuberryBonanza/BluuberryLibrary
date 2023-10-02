@@ -5,10 +5,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from enum import Int
+from bluuberrylibrary.enums.classes.bb_int import BBInt
 
 
-class BBInteractionLocation(Int):
+class BBInteractionLocation(BBInt):
     """Different locations for which interactions exist."""
     TERRAIN: 'BBInteractionLocation' = ...
     OCEAN: 'BBInteractionLocation' = ...
