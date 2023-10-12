@@ -1,0 +1,16 @@
+Version 1.1:
+New:
+- Added a utility for Managing Buffs on Sims. Adding/Removing
+- Added classes for creating custom interactions, Social Super, Super,
+  Social Mixer, and Mixer interactions.
+- Added a mixin for quickly adding a log to your Classes.
+- Added custom classes for Run and Test Results. These can be used in
+  place of the TestResult class.
+- Added a utility for Manipulating the Weather.
+- Added a utility for Managing Buffs.
+- Added a utility and commands for Adding Zone Modifiers.
+- Added a command and utility for creating and spawning Objects
+- Added a function to getting the active Sim to BBSimUtils
+
+Base Fixes:
+- Added a fix for Sims not having a Full Name value.

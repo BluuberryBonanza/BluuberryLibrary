@@ -32,4 +32,4 @@ class ModIdentity(BBModIdentity):
 
     @property
     def mod_version(self) -> str:
-        return '1.0'
+        return '1.1'
