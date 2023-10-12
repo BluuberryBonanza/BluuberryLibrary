@@ -7,6 +7,7 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Union
 
+import services
 from objects import HiddenReasonFlag, ALL_HIDDEN_REASONS
 from sims.sim import Sim
 from sims.sim_info import SimInfo
@@ -16,6 +17,24 @@ from sims.sim_info_manager import SimInfoManager
 
 class BBSimUtils:
     """Utilities for manipulating Sims."""
+
+    @classmethod
+    def get_active_sim_info(cls) -> Union[SimInfo, None]:
+        """get_active_sim_info()
+
+        Get the Info of the Active Sim.
+
+        :return: The Info of the Active Sim or None, if not found.
+        :rtype: SimInfo or None
+        """
+        client_manager = services.client_manager()
+        if client_manager is None:
+            return None
+        client = client_manager.get_first_client()
+        if client is None:
+            return None
+        # noinspection PyPropertyAccess
+        return client.active_sim_info
 
     @classmethod
     def to_sim_id(cls, sim_identifier: Union[int, Sim, SimInfo, SimInfoBaseWrapper]) -> int:

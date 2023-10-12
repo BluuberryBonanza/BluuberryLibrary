@@ -21,3 +21,10 @@ Logs
 .. autoclass:: bluuberrylibrary.logs.bb_stacktrace_utils.BBStacktraceUtils
    :members:
    :show-inheritance:
+
+`Log Mixin`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.logs.bb_log_mixin.BBLogMixin
+   :members:
+   :show-inheritance:

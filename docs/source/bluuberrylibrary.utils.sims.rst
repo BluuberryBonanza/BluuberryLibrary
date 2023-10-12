@@ -7,6 +7,14 @@ Sim Utilities
 .. autoclass:: bluuberrylibrary.utils.sims.bb_sim_interaction_utils.BBSimInteractionUtils
    :members:
    :show-inheritance:
+
+
+`Sim Buff Utils`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.utils.sims.bb_sim_buff_utils.BBSimBuffUtils
+   :members:
+   :show-inheritance:
   
 
 `Sim Utils`

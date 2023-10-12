@@ -24,7 +24,10 @@ Contents
    bluuberrylibrary.logs
    bluuberrylibrary.mod_registration
    bluuberrylibrary.utils.debug
+   bluuberrylibrary.utils.environment
    bluuberrylibrary.utils.file
    bluuberrylibrary.utils.instances
+   bluuberrylibrary.utils.location
+   bluuberrylibrary.utils.objects
    bluuberrylibrary.utils.sims
    bluuberrylibrary.utils.time

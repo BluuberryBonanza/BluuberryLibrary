@@ -7,8 +7,8 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Any
 
-from bluuberrylibrary.logs.bb_log import BBLog
-from bluuberrylibrary.logs.bb_log_registry import BBLogRegistry
+from bluuberrylibrary.interactions.classes.bb_interaction_overrides_mixin import BBInteractionOverridesMixin
+from bluuberrylibrary.logs.bb_log_mixin import BBLogMixin
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
 from bluuberrylibrary.utils.sims.bb_sim_utils import BBSimUtils
 from event_testing.results import TestResult
@@ -16,57 +16,22 @@ from interactions.base.immediate_interaction import ImmediateSuperInteraction
 from interactions.context import InteractionContext
 from interactions.interaction_finisher import FinishingType
 from sims.sim import Sim
-from sims.sim_info import SimInfo
 
 
-class BBImmediateSuperInteraction(ImmediateSuperInteraction):
+class BBImmediateSuperInteraction(ImmediateSuperInteraction, BBLogMixin, BBInteractionOverridesMixin):
     """An interaction that occurs immediately when the player selects it. The Sim will not queue it."""
     @classmethod
     def get_mod_identity(cls) -> BBModIdentity:
-        """The identity of the mod that owns this class."""
         raise NotImplementedError()
 
     @classmethod
     def get_log_name(cls) -> str:
-        """The name of the log used within the class."""
         raise NotImplementedError()
 
-    @classmethod
-    def get_log(cls) -> BBLog:
-        return BBLogRegistry().register_log(cls.get_mod_identity(), cls.get_log_name())
-
-    # noinspection PyUnusedLocal
-    @classmethod
-    def bbl_test(cls, interaction_sim_info: SimInfo, interaction_target: Any, interaction_context: InteractionContext, *args, **kwargs) -> TestResult:
-        """bbl_test(interaction_sim_info, interaction_target, interaction_context, *args, **kwargs)
-
-        Occurs when testing the interaction.
-
-        :param interaction_sim_info: The source Sim of the interaction.
-        :type interaction_sim_info: SimInfo
-        :param interaction_target: The target Object of the interaction.
-        :type interaction_target: Any
-        :param interaction_context: The context of the interaction.
-        :type interaction_context: InteractionContext
-        :return: The outcome of testing the availability of the interaction
-        :rtype: TestResult
-        """
-        return TestResult.TRUE
-
-    # noinspection PyUnusedLocal
-    def bbl_started(self, interaction_sim_info: SimInfo, interaction_target: Any) -> TestResult:
-        """bbl_started(interaction_sim_info, interaction_target)
-
-        Occurs when starting the interaction.
-
-        :param interaction_sim_info: The source Sim of the interaction.
-        :type interaction_sim_info: SimInfo
-        :param interaction_target: The target Object of the interaction.
-        :type interaction_target: Any
-        :return: The result of running the start function. True, if the interaction hook was executed successfully. False, if the interaction hook was not executed successfully.
-        :rtype: TestResult
-        """
-        return TestResult.TRUE
+    def __init__(self, *_, **__):
+        super().__init__(*_, **__)
+        BBLogMixin.__init__(self)
+        BBInteractionOverridesMixin.__init__(self)
 
     @classmethod
     def _test(cls, target: Any, context: InteractionContext, **kwargs) -> TestResult:
@@ -79,16 +44,16 @@ class BBImmediateSuperInteraction(ImmediateSuperInteraction):
                 target_sim_info = BBSimUtils.to_sim_info(target_sim_info)
             test_result = cls.bbl_test(sim_info, target_sim_info, context, **kwargs)
             if not test_result:
-                return test_result
+                return test_result.to_base()
         except Exception as ex:
             log.error(f'Error happened while running bbl_test of \'{cls.__name__}\'.', exception=ex)
-            return TestResult(False, f'An error happened {ex} running bbl_test.')
+            return TestResult(False, f'An error happened running bbl_test {ex}.')
 
         try:
             return super()._test(target, context, **kwargs)
         except Exception as ex:
             log.error(f'Error happened while running _test of \'{cls.__name__}\'.', exception=ex)
-            return TestResult(False, f'An error happened {ex} running _test.')
+            return TestResult(False, f'An error happened running _test {ex}.')
 
     def _trigger_interaction_start_event(self: 'BBImmediateSuperInteraction'):
         log = self.get_log()
