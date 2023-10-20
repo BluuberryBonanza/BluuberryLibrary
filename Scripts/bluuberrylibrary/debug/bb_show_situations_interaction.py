@@ -5,27 +5,27 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Any, List
+from typing import Any
 
 from bluuberrylibrary.classes.bb_test_result import BBTestResult
 from bluuberrylibrary.interactions.classes.bb_immediate_super_interaction import BBImmediateSuperInteraction
 from bluuberrylibrary.mod_identity import ModIdentity
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
-from bluuberrylibrary.utils.instances.bb_interaction_utils import BBInteractionUtils
-from bluuberrylibrary.utils.sims.bb_sim_interaction_utils import BBSimInteractionUtils
+from bluuberrylibrary.utils.instances.bb_situation_utils import BBSituationUtils
+from bluuberrylibrary.utils.sims.bb_sim_situation_utils import BBSimSituationUtils
 from bluuberrylibrary.utils.sims.bb_sim_utils import BBSimUtils
 from interactions.context import InteractionContext
 from sims.sim_info import SimInfo
 
 
-class BBDebugShowInteractionsInteraction(BBImmediateSuperInteraction):
+class BBDebugShowSituationsInteraction(BBImmediateSuperInteraction):
     @classmethod
     def get_mod_identity(cls) -> BBModIdentity:
         return ModIdentity()
 
     @classmethod
     def get_log_name(cls) -> str:
-        return 'bb_show_interactions_interaction'
+        return 'bb_show_situations_interaction'
 
     # noinspection PyUnusedLocal
     @classmethod
@@ -65,29 +65,26 @@ class BBDebugShowInteractionsInteraction(BBImmediateSuperInteraction):
         """
         log = self.get_log()
         target_sim_instance = BBSimUtils.to_sim_instance(interaction_target_sim_info)
-        running_interaction_strings: List[str] = list()
-        for interaction in BBSimInteractionUtils.get_running_interactions_gen(interaction_target_sim_info):
-            interaction_name = BBInteractionUtils.get_interaction_short_name(interaction)
-            interaction_id = BBInteractionUtils.to_interaction_guid(interaction)
-            running_interaction_strings.append(f'{interaction_name} ({interaction_id})')
-        running_interaction_strings = sorted(running_interaction_strings, key=lambda x: x)
-        running_interaction_names = ', '.join(running_interaction_strings)
+        situation_texts = list()
+        for situation in BBSimSituationUtils.get_situations(interaction_target_sim_info):
+            situation_name = BBSituationUtils.get_situation_name(situation)
+            situation_id = BBSituationUtils.get_situation_guid(situation)
+            situation_job = BBSimSituationUtils.get_situation_job(interaction_target_sim_info, situation)
+            job_name = BBSituationUtils.get_situation_job_name(situation_job)
 
-        queued_interaction_strings: List[str] = list()
-        for interaction in BBSimInteractionUtils.get_queued_interactions_gen(interaction_target_sim_info):
-            interaction_name = BBInteractionUtils.get_interaction_short_name(interaction)
-            interaction_id = BBInteractionUtils.to_interaction_guid(interaction)
-            queued_interaction_strings.append(f'{interaction_name} ({interaction_id})')
-        queued_interaction_strings = sorted(queued_interaction_strings, key=lambda x: x)
-        queued_interaction_names = ', '.join(queued_interaction_strings)
-        text = ''
-        text += f'Running:\n{running_interaction_names}\n\n'
-        text += f'Queued:\n{queued_interaction_names}\n\n'
+            situation_role = BBSimSituationUtils.get_situation_role(interaction_target_sim_info, situation)
+            role_name = BBSituationUtils.get_situation_role_name(situation_role)
+            situation_texts.append(f'Situation: {situation_name} ({situation_id}). Role: {role_name} Job {situation_job}')
+
+        situation_texts = sorted(situation_texts, key=lambda x: x)
+
         log.enable()
-        sim_running_interactions_for_log = ',\n'.join(running_interaction_strings)
-        for_log_text = f'Running:\n{sim_running_interactions_for_log}\n\n'
-        sim_queued_interactions_for_log = ',\n'.join(queued_interaction_strings)
-        for_log_text += f'Queued:\n{sim_queued_interactions_for_log}\n\n'
-        log.debug(f'{target_sim_instance} ({BBSimUtils.to_sim_id(interaction_target_sim_info)}): {for_log_text}')
+        sim_id = BBSimUtils.to_sim_id(interaction_target_sim_info)
+        log.debug(f'{interaction_target_sim_info} ({sim_id}) Situations')
+        if not situation_texts:
+            log.debug('No Situations.')
+        else:
+            text = '\n\n'.join(situation_texts)
+            log.debug(text)
         log.disable()
         return BBTestResult.TRUE

@@ -28,9 +28,9 @@ class BBTestResult(BBRunResult):
     :param tooltip_text: The text to show if the result is returned to a UI Element.
     :type tooltip_text: Any, optional
     :param icon: The icon to show with the result.
-    :type icon: Any
-    :param influence_by_active_mood: True, if the result was influenced by the active Mood of a Sim.
-    :type influence_by_active_mood: bool
+    :type icon: Any, optional
+    :param influence_by_active_mood: True, if the result was influenced by the active Mood of a Sim. Default is False.
+    :type influence_by_active_mood: bool, optional
     """
     TRUE = None
     FALSE = None

@@ -5,10 +5,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
+from bluuberrylibrary.classes.bb_run_result import BBRunResult
 from bluuberrylibrary.events.event_dispatchers.bb_event_dispatcher import BBEventDispatcher
 from bluuberrylibrary.mod_identity import ModIdentity
 from bluuberrylibrary.utils.debug.bb_injection_utils import BBInjectionUtils
-from event_testing.results import TestResult
 from server.client import Client
 from zone import Zone
 
@@ -31,7 +31,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         """True, if the client has finished loading for the very first time. False, if not."""
         return self._client_finished_first_load
 
-    def on_zone_load_finished(self, zone: Zone, household_id: int, is_build_mode: bool) -> TestResult:
+    def on_zone_load_finished(self, zone: Zone, household_id: int, is_build_mode: bool) -> BBRunResult:
         """on_zone_load_finished(zone, household_id, is_build_mode)
 
         Dispatch an event when a zone finishes loading.
@@ -43,7 +43,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         :param is_build_mode: True, if the client loaded into Build Mode. False, if the client loaded into Live Mode.
         :type is_build_mode: bool
         :return: The result of dispatching the event. True, if successful. False, if not.
-        :rtype: TestResult
+        :rtype: BBRunResult
         """
         from bluuberrylibrary.events.event_dispatchers.zone.events.bb_on_zone_load_end_event import BBOnZoneLoadEndEvent
         event = BBOnZoneLoadEndEvent(ModIdentity(), zone, household_id, is_build_mode, self.client_finished_first_load)
@@ -52,7 +52,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         self._client_is_loading = False
         return result
 
-    def on_zone_load_started(self, zone: Zone) -> TestResult:
+    def on_zone_load_started(self, zone: Zone) -> BBRunResult:
         """on_zone_load_started(zone)
 
         Dispatch an event when a Zone starts loading.
@@ -60,7 +60,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         :param zone: The zone that started to load.
         :type zone: Zone
         :return: The result of dispatching the event. True, if successful. False, if not.
-        :rtype: TestResult
+        :rtype: BBRunResult
         """
         self._client_is_loading = True
         from bluuberrylibrary.events.event_dispatchers.zone.events.bb_on_zone_load_start_event import \
@@ -69,7 +69,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         result = self.dispatch(event)
         return result
 
-    def on_zone_unload_started(self, zone: Zone, client: Client) -> TestResult:
+    def on_zone_unload_started(self, zone: Zone, client: Client) -> BBRunResult:
         """on_zone_unload_started(zone, client)
 
         Dispatch an event when a Zone starts unloading.
@@ -79,7 +79,7 @@ class BBZoneEventDispatcher(BBEventDispatcher):
         :param client: The client being unloaded.
         :type client: Client
         :return: The result of dispatching the event. True, if successful. False, if not.
-        :rtype: TestResult
+        :rtype: BBRunResult
         """
         self._client_is_loading = True
         from bluuberrylibrary.events.event_dispatchers.zone.events.bb_on_zone_unload_start_event import \

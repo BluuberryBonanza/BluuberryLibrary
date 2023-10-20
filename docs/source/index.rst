@@ -16,6 +16,7 @@ Contents
 .. toctree::
 
    bluuberrylibrary.classes
+   bluuberrylibrary.dialogs.notifications
    bluuberrylibrary.enums
    bluuberrylibrary.events.event_handling
    bluuberrylibrary.events.event_dispatchers.zone
@@ -30,4 +31,5 @@ Contents
    bluuberrylibrary.utils.location
    bluuberrylibrary.utils.objects
    bluuberrylibrary.utils.sims
+   bluuberrylibrary.utils.text
    bluuberrylibrary.utils.time

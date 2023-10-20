@@ -33,7 +33,7 @@ def _bbl_command_spawn_object(object_definition: int, _connection: int = None):
             return TestResult(False, 'No Active Sim Info found!')
         active_sim_location = BBSimUtils.to_sim_instance(active_sim_info).location
         object_instance = BBObjectSpawnUtils.spawn_object_at_location(object_definition, active_sim_location)
-        output(f'Done! {object_instance}')
+        output(f'Done! {object_instance.result}')
     except Exception as ex:
         output('Failed to spawn object, an error occurred!')
         log.error(f'Failed to spawn object {object_definition}. An error occurred.', active_sim_info=active_sim_info, active_sim_location=active_sim_location, object_instance=object_instance, exception=ex)

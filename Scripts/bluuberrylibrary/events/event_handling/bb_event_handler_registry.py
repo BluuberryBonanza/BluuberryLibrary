@@ -1,5 +1,6 @@
 from typing import Any, Type, List, Callable
 
+from bluuberrylibrary.classes.bb_run_result import BBRunResult
 from bluuberrylibrary.events.event_handling.bb_event import BBEvent
 from bluuberrylibrary.events.event_handling.bb_event_handler import BBEventHandler
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
@@ -29,7 +30,7 @@ class BBEventHandlerRegistry(metaclass=BBSingleton):
     def __init__(self):
         self._event_handlers: List[BBEventHandler] = []
 
-    def dispatch(self, event: BBEvent) -> TestResult:
+    def dispatch(self, event: BBEvent) -> BBRunResult:
         """dispatch(event)
 
         Dispatch an event to all listening handlers.
@@ -37,9 +38,9 @@ class BBEventHandlerRegistry(metaclass=BBSingleton):
         :param event: An event to dispatch.
         :type event: BBEvent
         :return: The result of dispatching the event.
-        :rtype: TestResult
+        :rtype: BBRunResult
         """
-        all_success = TestResult.TRUE
+        all_success = BBRunResult.TRUE
         for event_handler in self._event_handlers:
             if event_handler.can_handle(event):
                 try:

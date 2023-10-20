@@ -12,11 +12,33 @@ from bluuberrylibrary.utils.instances.bb_buff_utils import BBBuffUtils
 from bluuberrylibrary.utils.sims.bb_sim_utils import BBSimUtils
 from buffs.buff import Buff
 from event_testing.resolver import SingleSimResolver
+from objects.components.buff_component import BuffComponent
 from sims.sim_info import SimInfo
 
 
 class BBSimBuffUtils:
     """Utilities for managing Buffs on Sims."""
+    @classmethod
+    def has_buff(cls, sim_info: SimInfo, buff: Union[int, Buff]) -> bool:
+        """has_buff(sim_info, buff)
+
+        Check if a Sim has a buff or not.
+
+        :param sim_info: The info of a Sim.
+        :type sim_info: SimInfo
+        :param buff: The buff to check for.
+        :type buff: int or Trait
+        :return: True, if the Sim has the buff. False, if not.
+        :rtype: bool
+        """
+        if sim_info is None:
+            raise AssertionError('sim_info was None')
+        buff_instance = BBBuffUtils.load_buff_by_guid(buff)
+        if buff_instance is None:
+            return False
+        buff_component: BuffComponent = sim_info.buff_component
+        return buff_component.has_buff(buff_instance)
+
     @classmethod
     def add_buff(cls, sim_info: SimInfo, buff: Union[int, Buff], reason: int) -> BBRunResult:
         """add_buff(sim_info, buff, reason)

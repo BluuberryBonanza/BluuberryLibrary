@@ -24,11 +24,11 @@ class BBOnZoneLoadStartEvent(BBEvent):
     .. code-block:: python
 
         from bluuberrylibrary.events.event_handling.bb_event_handler_registry import BBEventHandlerRegistry
-        from event_testing.results import TestResult
+        from bluuberrylibrary.classes.bb_test_result import BBTestResult
 
         @BBEventHandlerRegistry.register(ModIdentity(), BBOnZoneLoadStartEvent)
         def _bbl_handle_on_zone_load_start(event: BBOnZoneLoadStartEvent):
-            return TestResult.TRUE
+            return BBTestResult.TRUE
 
     :param mod_identity: The identity of the mod that owns this event.
     :type mod_identity: BBModIdentity

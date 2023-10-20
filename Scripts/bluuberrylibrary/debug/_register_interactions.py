@@ -7,7 +7,7 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Tuple
 
-from bluuberrylibrary.enums.interaction_ids import BBLInteractionIds
+from bluuberrylibrary.enums.interaction_ids import BBLInteractionId
 from bluuberrylibrary.interactions.registration.bb_interaction_registry import BBInteractionRegistry
 from bluuberrylibrary.interactions.registration.handlers.bb_sim_interaction_handler import BBSimInteractionHandler
 
@@ -17,6 +17,8 @@ class _BBLSimInteractionRegistration(BBSimInteractionHandler):
 
     @property
     def interaction_guids(self) -> Tuple[int]:
+        # noinspection PyTypeChecker
         return (
-            BBLInteractionIds.BBL_DEBUG_SHOW_INTERACTIONS,
+            BBLInteractionId.BBL_DEBUG_SHOW_INTERACTIONS,
+            BBLInteractionId.BBL_DEBUG_SHOW_SITUATIONS
         )

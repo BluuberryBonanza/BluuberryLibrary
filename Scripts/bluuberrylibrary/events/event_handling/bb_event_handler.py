@@ -7,15 +7,9 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Type, Callable
 
+from bluuberrylibrary.classes.bb_run_result import BBRunResult
 from bluuberrylibrary.events.event_handling.bb_event import BBEvent
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
-
-# noinspection PyBroadException
-try:
-    from event_testing.results import TestResult
-except:
-    class TestResult:
-        pass
 
 
 class BBEventHandler:
@@ -28,7 +22,7 @@ class BBEventHandler:
     :param event_type: The type of event being handled.
     :type event_type: Type[BBEvent]
     :param handler: The function that handles events.
-    :type handler: Callable[[BBEvent], Any]
+    :type handler: Callable[[BBEvent], BBRunResult]
     :exception RuntimeError: When event_function is None.
     :exception TypeError: When event_function is not a callable function.
     :exception AssertionError: When the event_function is missing the event_data argument, when the event_function contains a self or cls argument, or when more than one argument is found.
@@ -37,7 +31,7 @@ class BBEventHandler:
         self,
         mod_identity: BBModIdentity,
         event_type: Type[BBEvent],
-        handler: Callable[[BBEvent], TestResult]
+        handler: Callable[[BBEvent], BBRunResult]
     ):
         self._mod_identity = mod_identity
         self._event_type = event_type
@@ -53,11 +47,11 @@ class BBEventHandler:
         return self._mod_identity
 
     @property
-    def handler(self) -> Callable[[BBEvent], TestResult]:
+    def handler(self) -> Callable[[BBEvent], BBRunResult]:
         """The function invoked when the handler handles an event.
 
         :return: A function invoked upon handling events.
-        :rtype: Callable[[BBEvent], TestResult]
+        :rtype: Callable[[BBEvent], BBRunResult]
         """
         return self._handler
 
@@ -73,5 +67,5 @@ class BBEventHandler:
     def can_handle(self, event: BBEvent) -> bool:
         return isinstance(event, self.event_type)
 
-    def handle(self, event: BBEvent) -> TestResult:
+    def handle(self, event: BBEvent) -> BBRunResult:
         return self._handler(event)

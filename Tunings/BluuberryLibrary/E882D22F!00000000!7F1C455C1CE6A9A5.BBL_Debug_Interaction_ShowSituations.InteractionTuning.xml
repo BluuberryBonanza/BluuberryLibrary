@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="BBDebugShowSituationsInteraction" i="interaction" m="bluuberrylibrary.debug.bb_show_situations_interaction" n="BBL_Debug_Interaction_ShowSituations" s="9159272004088932773">
+  <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="category">15787134577411302317<!--BBL_PieMenu_BluuberryLibrary--></T>
+  <T n="display_name">0xC53ADC8D<!--Show Situations--></T>
+  <L n="interaction_category_tags">
+    <E>Interaction_Super</E>
+    <E>Interaction_All</E>
+  </L>
+  <T n="pie_menu_priority">9</T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

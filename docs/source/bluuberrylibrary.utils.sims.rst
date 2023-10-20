@@ -15,6 +15,22 @@ Sim Utilities
 .. autoclass:: bluuberrylibrary.utils.sims.bb_sim_buff_utils.BBSimBuffUtils
    :members:
    :show-inheritance:
+
+
+`Sim Situation Utils`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.utils.sims.bb_sim_situation_utils.BBSimSituationUtils
+   :members:
+   :show-inheritance:
+
+
+`Sim Trait Utils`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.utils.sims.bb_sim_trait_utils.BBSimTraitUtils
+   :members:
+   :show-inheritance:
   
 
 `Sim Utils`
