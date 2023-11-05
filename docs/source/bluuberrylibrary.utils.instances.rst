@@ -8,6 +8,13 @@ Instance Utilities
    :members:
    :show-inheritance:
 
+`Instance Utils`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.utils.instances.bb_instance_utils.BBInstanceUtils
+   :members:
+   :show-inheritance:
+
 `Buff Utils`
 -----------------------------------------------------------------
 

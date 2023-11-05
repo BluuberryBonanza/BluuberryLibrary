@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Tuple, Any, Union, Iterator
+from typing import Tuple, Any, Union, Iterable
 
 from bluuberrylibrary.enums.string_ids import BBStringId
 from bluuberrylibrary.utils.text.bb_localized_tooltip import LocalizedTooltip
@@ -80,20 +80,20 @@ class BBLocalizationUtils:
         return cls._localized_string_from_string(str(text))
 
     @classmethod
-    def _normalize_tokens(cls, tokens: Tuple[Any]) -> Iterator[LocalizedString]:
+    def _normalize_tokens(cls, tokens: Tuple[Any]) -> Iterable[LocalizedString]:
         new_tokens = []
         for token in tokens:
             new_tokens.append(cls.to_localized_string(token))
         return tuple(new_tokens)
 
     @classmethod
-    def combine_strings(cls, text_list: Iterator[Union[int, str, LocalizedString]], separator_text: int = BBStringId.BBL_STRING_COMMA_STRING) -> LocalizedString:
+    def combine_strings(cls, text_list: Iterable[Union[int, str, LocalizedString]], separator_text: int = BBStringId.BBL_STRING_COMMA_STRING) -> LocalizedString:
         """combine_strings(text_list, separator_text=BBStringId.BBL_STRING_COMMA_STRING)
 
         Combine multiple strings by a separation string.
 
         :param text_list: The text to combine.
-        :type text_list: Iterator[int or str or LocalizedString]
+        :type text_list: Iterable[int or str or LocalizedString]
         :param separator_text: The text that will act as the separator.
         :type separator_text: int
         :return: A combined string.

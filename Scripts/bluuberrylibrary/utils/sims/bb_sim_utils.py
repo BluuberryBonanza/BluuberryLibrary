@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Union
+from typing import Union, Iterable
 
 import services
 from objects import HiddenReasonFlag, ALL_HIDDEN_REASONS
@@ -124,3 +124,14 @@ class BBSimUtils:
         """
         import services
         return services.sim_info_manager()
+
+    @classmethod
+    def get_all_sim_info_gen(cls) -> Iterable[SimInfo]:
+        """get_all_sim_info_gen()
+
+        Get all Sim Infos
+
+        :return: An iterable of SimInfo
+        :rtype: Iterable[SimInfo]
+        """
+        yield from tuple(cls.get_sim_info_manager().get_all())

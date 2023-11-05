@@ -137,9 +137,9 @@ class BBLog:
         return self._is_enabled
 
     def __logging_file_path(self) -> str:
-        if self._logging_file_path:
-            return os.path.join(self._logging_file_path, 'bb_logs')
         from bluuberrylibrary.utils.file.bb_game_file_utils import BBGameFileUtils
+        if self._logging_file_path:
+            return os.path.join(BBGameFileUtils.get_the_sims_4_file_path(), 'bb_logs', self._logging_file_path)
         return os.path.join(BBGameFileUtils.get_the_sims_4_file_path(), 'bb_logs')
 
     def _debug_file_name(self) -> str:

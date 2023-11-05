@@ -5,7 +5,11 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
+from typing import Union
+
+import services
 from role.role_state import RoleState
+from sims4.resources import Types
 from situations.situation import Situation
 from situations.situation_job import SituationJob
 
@@ -72,3 +76,20 @@ class BBSituationUtils:
         if situation_role is None or not hasattr(situation_role, '__name__'):
             return 'No Situation Role Name'
         return situation_role.__name__ or 'No Situation Role Name'
+
+    @classmethod
+    def load_situation_by_guid(cls, situation: int) -> Union[Situation, None]:
+        """load_trait_by_guid(situation)
+
+        Load a Situation by its GUID
+
+        :param situation: The GUID of the Situation to load.
+        :type situation: int
+        :return: The loaded Situation or None if not found.
+        :rtype: Situation or None
+        """
+        if isinstance(situation, Situation) or situation is Situation:
+            return situation
+
+        instance_manager = services.get_instance_manager(Types.SITUATION)
+        return instance_manager.get(situation)

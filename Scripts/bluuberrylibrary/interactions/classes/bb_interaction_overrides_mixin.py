@@ -7,6 +7,7 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Any
 
+from bluuberrylibrary.classes.bb_run_result import BBRunResult
 from bluuberrylibrary.classes.bb_test_result import BBTestResult
 from bluuberrylibrary.logs.bb_log import BBLog
 from bluuberrylibrary.logs.bb_log_registry import BBLogRegistry
@@ -16,6 +17,7 @@ from event_testing.results import TestResult
 from interactions.base.immediate_interaction import ImmediateSuperInteraction
 from interactions.context import InteractionContext
 from interactions.interaction_finisher import FinishingType
+from scheduling import Timeline
 from sims.sim import Sim
 from sims.sim_info import SimInfo
 
@@ -41,7 +43,7 @@ class BBInteractionOverridesMixin:
         return BBTestResult.TRUE
 
     # noinspection PyUnusedLocal
-    def bbl_started(self, interaction_sim_info: SimInfo, interaction_target: Any) -> BBTestResult:
+    def bbl_started(self, interaction_sim_info: SimInfo, interaction_target: Any) -> BBRunResult:
         """bbl_started(interaction_sim_info, interaction_target)
 
         Occurs when starting the interaction.
@@ -51,6 +53,22 @@ class BBInteractionOverridesMixin:
         :param interaction_target: The target Object of the interaction.
         :type interaction_target: Any
         :return: The result of running the start function. True, if the interaction hook was executed successfully. False, if the interaction hook was not executed successfully.
-        :rtype: TestResult
+        :rtype: BBRunResult
         """
-        return BBTestResult.TRUE
+        return BBRunResult.TRUE
+
+    def bbl_run(self, interaction_sim_info: SimInfo, interaction_target: Any, timeline: Timeline) -> BBRunResult:
+        """bbl_run(interaction_sim_info, interaction_target, timeline)
+
+        Occurs when the interaction runs.
+
+        :param interaction_sim_info: The source Sim of the interaction.
+        :type interaction_sim_info: SimInfo
+        :param interaction_target: The target Object of the interaction.
+        :type interaction_target: Any
+        :param timeline: The timeline.
+        :type timeline: Timeline
+        :return: The result of running function. True, if the interaction hook was executed successfully. False, if the interaction hook was not executed successfully.
+        :rtype: BBRunResult
+        """
+        return BBRunResult.TRUE

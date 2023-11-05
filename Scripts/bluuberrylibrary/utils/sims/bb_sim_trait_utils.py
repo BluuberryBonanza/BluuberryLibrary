@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Union
+from typing import Union, List
 
 import services
 from bluuberrylibrary.classes.bb_run_result import BBRunResult
@@ -62,6 +62,28 @@ class BBSimTraitUtils:
         if added is None:
             return BBRunResult(False, f'Failed to add trait {trait_instance} to Sim {sim_info}.')
         return BBRunResult(True, f'Successfully added trait {trait_instance} to Sim {sim_info}.')
+
+    @classmethod
+    def get_traits(cls, sim_info: SimInfo) -> List[Trait]:
+        """get_traits(sim_info)
+
+        Get traits on a Sim.
+
+        :param sim_info: The info of a Sim.
+        :type sim_info: SimInfo
+        :return: A list of Traits.
+        :rtype: List[Trait]
+        """
+        if isinstance(sim_info, SimInfo):
+            if not hasattr(sim_info, 'get_traits'):
+                return list()
+            traits = list(sim_info.get_traits())
+            if traits:
+                return traits
+            if not hasattr(sim_info, '_base'):
+                return traits
+            return list([BBTraitUtils.load_trait_by_guid(trait_id) for trait_id in (*sim_info._base.trait_ids, *sim_info._base.base_trait_ids) if BBTraitUtils.load_trait_by_guid(trait_id) is not None])
+        return list()
 
     @classmethod
     def can_add_trait(cls, sim_info: SimInfo, trait: Union[int, Trait]) -> BBRunResult:

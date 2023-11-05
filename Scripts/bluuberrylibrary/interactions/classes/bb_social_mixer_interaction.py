@@ -44,13 +44,16 @@ class BBSocialMixerInteraction(SocialMixerInteraction, BBLogMixin, BBInteraction
                 target_sim_info = BBSimUtils.to_sim_info(target_sim_info)
             test_result = cls.bbl_test(sim_info, target_sim_info, context, *args, **kwargs)
             if not test_result:
+                log.debug('Failed test result', test_result=test_result)
                 return test_result.to_base()
         except Exception as ex:
             log.error(f'Error happened while running bbl_test of \'{cls.__name__}\'.', exception=ex)
             return TestResult(False, f'An error happened running bbl_test {ex}.')
 
         try:
-            return super()._test(target, context, *args, **kwargs)
+            super_result = super()._test(target, context, *args, **kwargs)
+            log.debug('Super Result', super_result=super_result)
+            return super_result
         except Exception as ex:
             log.error(f'Error happened while running _test of \'{cls.__name__}\'.', exception=ex)
             return TestResult(False, f'An error happened running _test {ex}.')

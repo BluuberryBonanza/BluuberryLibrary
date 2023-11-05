@@ -5,12 +5,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Tuple
+from typing import Tuple, Union
 
-from bluuberrylibrary.dialogs.notifications.bb_dialog_response import BBDialogResponse
+from bluuberrylibrary.dialogs.bb_dialog_response import BBDialogResponse
 from bluuberrylibrary.enums.classes.bb_int import BBInt
 from bluuberrylibrary.utils.text.bb_localization_utils import BBLocalizationUtils
 from distributor.shared_messages import IconInfoData
+from protocolbuffers.Localization_pb2 import LocalizedString
 from ui.ui_dialog_notification import UiDialogNotification
 
 
@@ -41,10 +42,39 @@ class BBNotificationAutoDeleteReason(BBInt):
 
 
 class BBNotification:
+    """A notification shown to the player.
+
+    :Example usage:
+
+    .. highlight:: python
+    .. code-block:: python
+
+        BBNotification(
+            'I am a title',
+            'I am a description'
+        ).show()
+
+    :param title: The title to show in the notification.
+    :type title: int or str or LocalizedString
+    :param description: The description to show in the notification.
+    :type description: int or str or LocalizedString
+    :param urgency: How urgent the notification will be. Default is Not Urgent. (Setting to URGENT will show orange box)
+    :type urgency: BBNotificationUrgency, optional
+    :param information_level: The level of information of the notification. Default is SIM.
+    :type information_level: BBNotificationLevel, optional
+    :param expand_behavior: How the notification should expand. Default is USER_SETTING.
+    :type expand_behavior: BBNotificationExpandBehavior, optional
+    :param visual_type: How the notification can appear to the player. Default is INFORMATION.
+    :type visual_type: BBNotificationVisualType, optional
+    :param auto_delete_reason: The reason for the notification to auto delete itself. Default is NO_REASON.
+    :type auto_delete_reason: BBNotificationAutoDeleteReason, optional
+    :param ui_responses: Responses used to create buttons in the notification and act on the results. Default is no buttons.
+    :type ui_responses: Tuple[BBDialogReason], optional
+    """
     def __init__(
         self,
-        title: int,
-        description: int,
+        title: Union[int, str, LocalizedString],
+        description: Union[int, str, LocalizedString],
         urgency: BBNotificationUrgency = BBNotificationUrgency.DEFAULT,
         information_level: BBNotificationLevel = BBNotificationLevel.SIM,
         expand_behavior: BBNotificationExpandBehavior = BBNotificationExpandBehavior.USER_SETTING,

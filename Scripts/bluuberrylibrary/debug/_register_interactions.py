@@ -20,5 +20,6 @@ class _BBLSimInteractionRegistration(BBSimInteractionHandler):
         # noinspection PyTypeChecker
         return (
             BBLInteractionId.BBL_DEBUG_SHOW_INTERACTIONS,
-            BBLInteractionId.BBL_DEBUG_SHOW_SITUATIONS
+            BBLInteractionId.BBL_DEBUG_SHOW_SITUATIONS,
+            BBLInteractionId.BBL_DEBUG_SHOW_TRAITS
         )

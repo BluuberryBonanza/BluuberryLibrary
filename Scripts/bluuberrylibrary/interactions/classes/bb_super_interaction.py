@@ -15,6 +15,7 @@ from event_testing.results import TestResult
 from interactions.base.super_interaction import SuperInteraction
 from interactions.context import InteractionContext
 from interactions.interaction_finisher import FinishingType
+from scheduling import Timeline
 from sims.sim import Sim
 
 
@@ -73,3 +74,21 @@ class BBSuperInteraction(SuperInteraction, BBLogMixin, BBInteractionOverridesMix
             return super()._trigger_interaction_start_event()
         except Exception as ex:
             log.error(f'Error happened while running _trigger_interaction_start_event of \'{self.__class__.__name__}\'.', exception=ex)
+
+    def _run_interaction_gen(self, timeline: Timeline):
+        log = self.get_log()
+        try:
+            sim_info = BBSimUtils.to_sim_info(self.sim)
+            target = self.target
+            if target is not None and isinstance(target, Sim):
+                target = BBSimUtils.to_sim_info(self.target)
+            result = self.bbl_run(sim_info, target, timeline)
+            if not result:
+                log.debug('Failed bbl_run', reason=result)
+        except Exception as ex:
+            log.error(f'Error happened when running bbl_run \'{self.__class__.__name__}\'.', exception=ex)
+
+        try:
+            yield from super()._run_interaction_gen(timeline)
+        except Exception as ex:
+            log.error(f'Error happened while running _run_interaction_gen of \'{self.__class__.__name__}\'.', exception=ex)

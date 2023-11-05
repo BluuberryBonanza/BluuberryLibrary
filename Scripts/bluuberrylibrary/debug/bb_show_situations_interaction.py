@@ -7,13 +7,16 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Any
 
+from bluuberrylibrary.classes.bb_run_result import BBRunResult
 from bluuberrylibrary.classes.bb_test_result import BBTestResult
+from bluuberrylibrary.dialogs.notifications.bb_notification import BBNotification
 from bluuberrylibrary.interactions.classes.bb_immediate_super_interaction import BBImmediateSuperInteraction
 from bluuberrylibrary.mod_identity import ModIdentity
 from bluuberrylibrary.mod_registration.bb_mod_identity import BBModIdentity
 from bluuberrylibrary.utils.instances.bb_situation_utils import BBSituationUtils
 from bluuberrylibrary.utils.sims.bb_sim_situation_utils import BBSimSituationUtils
 from bluuberrylibrary.utils.sims.bb_sim_utils import BBSimUtils
+from distributor.shared_messages import IconInfoData
 from interactions.context import InteractionContext
 from sims.sim_info import SimInfo
 
@@ -51,7 +54,7 @@ class BBDebugShowSituationsInteraction(BBImmediateSuperInteraction):
         return BBTestResult.TRUE
 
     # noinspection PyUnusedLocal
-    def bbl_started(self, interaction_sim_info: SimInfo, interaction_target_sim_info: SimInfo) -> BBTestResult:
+    def bbl_started(self, interaction_sim_info: SimInfo, interaction_target_sim_info: SimInfo) -> BBRunResult:
         """bbl_started(interaction_sim_info, interaction_target)
 
         Occurs when starting the interaction.
@@ -61,10 +64,10 @@ class BBDebugShowSituationsInteraction(BBImmediateSuperInteraction):
         :param interaction_target_sim_info: The target Object of the interaction.
         :type interaction_target_sim_info: Any
         :return: The result of running the start function. True, if the interaction hook was executed successfully. False, if the interaction hook was not executed successfully.
-        :rtype: BBTestResult
+        :rtype: BBRunResult
         """
         log = self.get_log()
-        target_sim_instance = BBSimUtils.to_sim_instance(interaction_target_sim_info)
+        target_sim = BBSimUtils.to_sim_instance(interaction_target_sim_info)
         situation_texts = list()
         for situation in BBSimSituationUtils.get_situations(interaction_target_sim_info):
             situation_name = BBSituationUtils.get_situation_name(situation)
@@ -82,9 +85,13 @@ class BBDebugShowSituationsInteraction(BBImmediateSuperInteraction):
         sim_id = BBSimUtils.to_sim_id(interaction_target_sim_info)
         log.debug(f'{interaction_target_sim_info} ({sim_id}) Situations')
         if not situation_texts:
-            log.debug('No Situations.')
+            text = 'No Situations'
         else:
             text = '\n\n'.join(situation_texts)
-            log.debug(text)
+        log.debug(text)
         log.disable()
-        return BBTestResult.TRUE
+        BBNotification(
+            f'{interaction_target_sim_info} ({sim_id}) Situations',
+            text
+        ).show(icon=IconInfoData(obj_instance=target_sim))
+        return BBRunResult.TRUE
