@@ -7,6 +7,8 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Any
 
+from bluuberrylibrary.utils.text.bb_localization_utils import BBLocalizationUtils
+
 # noinspection PyBroadException
 try:
     from event_testing.results import TestResult
@@ -62,15 +64,43 @@ class BBRunResult(TestResult):
         influence_by_active_mood: bool = False
     ):
         self._tooltip_text = tooltip_text
+        if tooltip_text is not None:
+            tooltip_text = BBLocalizationUtils.to_localized_tooltip(tooltip_text)
         super().__init__(
             result,
             reason,
-            tooltip=self._tooltip_text,
+            tooltip=tooltip_text,
             icon=icon,
             influence_by_active_mood=influence_by_active_mood
         )
 
+    @classmethod
+    def from_base(cls, test_result: TestResult) -> 'BBRunResult':
+        """from_base(test_result)
+
+        Convert a TestResult into a BBRunResult.
+
+        :param test_result: The TestResult to convert.
+        :type test_result: TestResult
+        :return: A BBRunResult
+        :rtype: BBRunResult
+        """
+        return BBRunResult(
+            test_result.result,
+            test_result.reason,
+            tooltip_text=test_result.tooltip,
+            icon=test_result.icon,
+            influence_by_active_mood=test_result.influence_by_active_mood
+        )
+
     def to_base(self) -> 'TestResult':
+        """to_base()
+
+        Convert this into a TestResult.
+
+        :return: A TestResult.
+        :rtype: TestResult
+        """
         return TestResult(
             self.result,
             self.reason,

@@ -8,7 +8,6 @@ Copyright (c) BLUUBERRYBONANZA
 from typing import Tuple, Iterator
 
 from bluuberrylibrary.interactions.registration.handlers.bb_interaction_location import BBInteractionLocation
-from bluuberrylibrary.utils.instances.bb_interaction_utils import BBInteractionUtils
 from interactions.base.interaction import Interaction
 from objects.script_object import ScriptObject
 
@@ -44,7 +43,7 @@ class BBInteractionHandler:
             for interaction_guid in self.interaction_guids:
                 interaction = affordance_manager.get(interaction_guid)
                 if interaction is None:
-                    raise Exception(f'No interaction found with id {interaction_guid} with {interaction}')
+                    continue
                 yield interaction
                 interactions.append(interaction)
             self._interactions = tuple(interactions)

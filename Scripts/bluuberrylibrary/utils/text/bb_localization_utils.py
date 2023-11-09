@@ -5,10 +5,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) BLUUBERRYBONANZA
 """
-from typing import Tuple, Any, Union, Iterable
+from typing import Any, Union, Iterable
 
 from bluuberrylibrary.enums.string_ids import BBStringId
-from bluuberrylibrary.utils.text.bb_localized_tooltip import LocalizedTooltip
+from bluuberrylibrary.utils.text.bb_localized_tooltip import BBLocalizedTooltip
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims4.localization import TunableLocalizedStringFactory
 
@@ -17,8 +17,8 @@ class BBLocalizationUtils:
     """Utilities for manipulating Localized Strings."""
 
     @classmethod
-    def to_localized_tooltip(cls, text: Union[int, str], tokens: Tuple[Any] = ()) -> LocalizedTooltip:
-        """to_localized_tooltip(text, tokens=())
+    def to_localized_tooltip(cls, text: Union[int, str], tokens: Iterable[Any] = (), normalize_tokens: bool = True) -> BBLocalizedTooltip:
+        """to_localized_tooltip(text, tokens=(), normalize_tokens=True)
 
         Convert an Integer or String into a Localized Tooltip.
 
@@ -26,18 +26,23 @@ class BBLocalizationUtils:
         :type text: int or str
         :param tokens: Tokens to format into the text. Default is no tokens.
         :type tokens: Tuple[Any], optional
+        :param normalize_tokens: If True, the tokens will be normalized into their own localized strings. Default is True.
+        :type normalize_tokens: bool, optional
         :return: A localized tooltip.
-        :rtype: LocalizedTooltip
+        :rtype: BBLocalizedTooltip
         """
         if text is None:
             raise AssertionError('Missing String!')
-        return LocalizedTooltip(text, tokens=tokens)
+        from bluuberrylibrary.utils.text.bb_localized_tooltip_data import BBLocalizedTooltipData
+        if isinstance(text, BBLocalizedTooltipData):
+            return text.localize(additional_tokens=tokens)
+        return BBLocalizedTooltip(text, tokens=tokens, normalize_tokens=normalize_tokens)
 
     @classmethod
     def to_localized_string(
         cls,
         text: Union[int, str, LocalizedString],
-        tokens: Tuple[Any] = (),
+        tokens: Iterable[Any] = (),
         normalize_tokens: bool = True
     ) -> LocalizedString:
         """to_localized_string(text, tokens=(), normalize_tokens=True)
@@ -63,6 +68,9 @@ class BBLocalizationUtils:
             from sims4.localization import create_tokens
             create_tokens(text.tokens, tokens)
             return text
+        from bluuberrylibrary.utils.text.bb_localized_string_data import BBLocalizedStringData
+        if isinstance(text, BBLocalizedStringData):
+            return text.localize(additional_tokens=tokens)
         # noinspection PyProtectedMember
         if isinstance(text, TunableLocalizedStringFactory._Wrapper):
             # noinspection PyProtectedMember
@@ -75,12 +83,16 @@ class BBLocalizationUtils:
             return localized_string
         if isinstance(text, int):
             return cls._localized_string_from_int(text, tokens=tokens)
+        if hasattr(text, 'sim_info'):
+            return text.sim_info
+        if hasattr(text, 'get_sim_info'):
+            return text.get_sim_info()
         if isinstance(text, str):
             return cls._localized_string_from_string(text)
         return cls._localized_string_from_string(str(text))
 
     @classmethod
-    def _normalize_tokens(cls, tokens: Tuple[Any]) -> Iterable[LocalizedString]:
+    def _normalize_tokens(cls, tokens: Iterable[Any]) -> Iterable[LocalizedString]:
         new_tokens = []
         for token in tokens:
             new_tokens.append(cls.to_localized_string(token))
@@ -113,7 +125,7 @@ class BBLocalizationUtils:
         return LocalizationHelperTuning.get_raw_text(text)
 
     @classmethod
-    def _localized_string_from_int(cls, identifier: int, tokens: Tuple[Any] = ()) -> LocalizedString:
+    def _localized_string_from_int(cls, identifier: int, tokens: Iterable[Any] = ()) -> LocalizedString:
         # noinspection PyProtectedMember
         from sims4.localization import _create_localized_string
         return _create_localized_string(identifier, *tokens)

@@ -8,6 +8,20 @@ Classes
    :members:
    :show-inheritance:
 
+`BB Enqueue Interaction Result`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.classes.bb_enqueue_interaction_result.BBEnqueueInteractionResult
+   :members:
+   :show-inheritance:
+
+`BB Execute Interaction Result`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.classes.bb_execute_interaction_result.BBExecuteInteractionResult
+   :members:
+   :show-inheritance:
+
 `BB Run Result`
 -----------------------------------------------------------------
 

@@ -8,6 +8,7 @@ Copyright (c) BLUUBERRYBONANZA
 from typing import Any
 
 from bluuberrylibrary.classes.bb_run_result import BBRunResult
+from event_testing.results import TestResult
 
 
 class BBTestResult(BBRunResult):
@@ -52,7 +53,33 @@ class BBTestResult(BBRunResult):
             influence_by_active_mood=influence_by_active_mood
         )
 
+    @classmethod
+    def from_base(cls, test_result: TestResult) -> 'BBTestResult':
+        """from_base(test_result)
+
+        Convert a TestResult into a BBTestResult.
+
+        :param test_result: The TestResult to convert.
+        :type test_result: TestResult
+        :return: A BBTestResult
+        :rtype: BBTestResult
+        """
+        return BBTestResult(
+            test_result.result,
+            test_result.reason,
+            tooltip_text=test_result.tooltip,
+            icon=test_result.icon,
+            influence_by_active_mood=test_result.influence_by_active_mood
+        )
+
     def reverse(self) -> 'BBTestResult':
+        """reverse()
+
+        Flip the result of this TestResult and return a new BBTestResult.
+
+        :return: A new Test Result, but with a reversed "result" value.
+        :rtype: BBTestResult
+        """
         return BBTestResult(
             not self.result,
             self.reason,

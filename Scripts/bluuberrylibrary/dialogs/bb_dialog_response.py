@@ -7,7 +7,8 @@ Copyright (c) BLUUBERRYBONANZA
 """
 from typing import Union, List
 
-from bluuberrylibrary.utils.text.bb_localization_utils import BBLocalizationUtils
+from bluuberrylibrary.utils.text.bb_localized_string_data import BBLocalizedStringData
+from bluuberrylibrary.utils.text.bb_localized_tooltip_data import BBLocalizedTooltipData
 from interactions.utils.loot import LootActions
 from interactions.utils.tunable_icon import TunableIcon
 from ui.ui_dialog import UiDialogResponse, ButtonType, _UiResponseCommand, UiResponseParticipantId
@@ -26,11 +27,11 @@ class BBDialogResponse(UiDialogResponse):
 
     def __init__(
         self,
-        text: Union[int, str],
-        subtext: Union[int, str] = None,
+        text: BBLocalizedStringData,
+        subtext: BBLocalizedStringData = None,
         button_icon: TunableIcon = None,
-        disabled_text: Union[int, str] = None,
-        tooltip_text: Union[int, str] = None,
+        disabled_text: BBLocalizedStringData = None,
+        tooltip_text: BBLocalizedTooltipData = None,
         sort_order: int = 0,
         dialog_response_id: int = ButtonType.DIALOG_RESPONSE_NO_RESPONSE,
         ui_request: UiDialogResponse.UiDialogUiRequest = UiDialogResponse.UiDialogUiRequest.NO_REQUEST,
@@ -41,13 +42,13 @@ class BBDialogResponse(UiDialogResponse):
         ui_message_name: str = None
     ):
         if text is not None:
-            text = BBLocalizationUtils.to_localized_string(text)
+            text = text.localize()
         if subtext is not None:
-            subtext = BBLocalizationUtils.to_localized_string(subtext)
+            subtext = subtext.localize()
         if disabled_text is not None:
-            disabled_text = BBLocalizationUtils.to_localized_string(disabled_text)
+            disabled_text = disabled_text.localize()
         if tooltip_text is not None:
-            tooltip_text = BBLocalizationUtils.to_localized_tooltip(tooltip_text)
+            tooltip_text = tooltip_text.localize()
         super().__init__(
             sort_order=sort_order,
             dialog_response_id=dialog_response_id,

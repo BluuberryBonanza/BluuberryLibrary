@@ -16,6 +16,7 @@ Contents
 .. toctree::
 
    bluuberrylibrary.classes
+   bluuberrylibrary.dialogs.icons
    bluuberrylibrary.dialogs.notifications
    bluuberrylibrary.enums
    bluuberrylibrary.events.event_handling
