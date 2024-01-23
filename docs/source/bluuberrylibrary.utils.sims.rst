@@ -33,6 +33,14 @@ Sim Utilities
    :show-inheritance:
 
 
+`Sim Statistic Utils`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.utils.sims.bb_sim_statistic_utils.BBSimStatisticUtils
+   :members:
+   :show-inheritance:
+
+
 `Sim Trait Utils`
 -----------------------------------------------------------------
 

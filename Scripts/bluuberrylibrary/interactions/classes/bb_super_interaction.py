@@ -92,3 +92,19 @@ class BBSuperInteraction(SuperInteraction, BBLogMixin, BBInteractionOverridesMix
             yield from super()._run_interaction_gen(timeline)
         except Exception as ex:
             log.error(f'Error happened while running _run_interaction_gen of \'{self.__class__.__name__}\'.', exception=ex)
+
+    def cancel(self, finishing_type, cancel_reason_msg, **kwargs):
+        log = self.get_log()
+        try:
+            sim_info = BBSimUtils.to_sim_info(self.sim)
+            target = self.target
+            if target is not None and isinstance(target, Sim):
+                target = BBSimUtils.to_sim_info(self.target)
+            self.bbl_cancelled(sim_info, target, self.context, finishing_type, cancel_reason_msg, **kwargs)
+        except Exception as ex:
+            log.error(f'Error happened when running bbl_cancelled \'{self.__class__.__name__}\'.', exception=ex)
+
+        try:
+            return super().cancel(finishing_type, cancel_reason_msg, **kwargs)
+        except Exception as ex:
+            log.error(f'Error happened while running cancel of \'{self.__class__.__name__}\'.', exception=ex)

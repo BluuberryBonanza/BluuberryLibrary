@@ -8,6 +8,13 @@ Enums
    :members:
    :show-inheritance:
 
+`BB Component Types`
+-----------------------------------------------------------------
+
+.. autoclass:: bluuberrylibrary.enums.classes.bb_component_type.BBComponentType
+   :members:
+   :show-inheritance:
+
 `BB Int`
 -----------------------------------------------------------------
 

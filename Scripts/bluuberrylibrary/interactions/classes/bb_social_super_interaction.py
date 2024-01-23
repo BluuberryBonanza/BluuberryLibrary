@@ -52,7 +52,10 @@ class BBSocialSuperInteraction(SocialSuperInteraction, BBLogMixin, BBInteraction
             return TestResult(False, f'An error happened running bbl_test {ex}.')
 
         try:
-            return super(BBSocialSuperInteraction, inst_or_cls)._test(target, context, **kwargs)
+            super_result = super(BBSocialSuperInteraction, inst_or_cls)._test(target, context, **kwargs)
+            if not super_result:
+                log.debug('Super Result', super_result=super_result)
+            return super_result
         except Exception as ex:
             log.error(f'Error happened while running _test of \'{cls.__name__}\'.', exception=ex)
             return TestResult(False, f'An error happened running _test {ex}.')
@@ -75,3 +78,19 @@ class BBSocialSuperInteraction(SocialSuperInteraction, BBLogMixin, BBInteraction
             return super()._trigger_interaction_start_event()
         except Exception as ex:
             log.error(f'Error happened while running _trigger_interaction_start_event of \'{self.__class__.__name__}\'.', exception=ex)
+
+    def cancel(self, finishing_type, cancel_reason_msg, **kwargs):
+        log = self.get_log()
+        try:
+            sim_info = BBSimUtils.to_sim_info(self.sim)
+            target = self.target
+            if target is not None and isinstance(target, Sim):
+                target = BBSimUtils.to_sim_info(self.target)
+            self.bbl_cancelled(sim_info, target, self.context, finishing_type, cancel_reason_msg, **kwargs)
+        except Exception as ex:
+            log.error(f'Error happened when running bbl_cancelled \'{self.__class__.__name__}\'.', exception=ex)
+
+        try:
+            return super().cancel(finishing_type, cancel_reason_msg, **kwargs)
+        except Exception as ex:
+            log.error(f'Error happened while running cancel of \'{self.__class__.__name__}\'.', exception=ex)

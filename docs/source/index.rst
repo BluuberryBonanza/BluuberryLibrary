@@ -16,10 +16,13 @@ Contents
 .. toctree::
 
    bluuberrylibrary.classes
+   bluuberrylibrary.dialogs
    bluuberrylibrary.dialogs.icons
    bluuberrylibrary.dialogs.notifications
    bluuberrylibrary.enums
    bluuberrylibrary.events.event_handling
+   bluuberrylibrary.events.event_dispatchers.interaction
+   bluuberrylibrary.events.event_dispatchers.sim
    bluuberrylibrary.events.event_dispatchers.zone
    bluuberrylibrary.interactions.classes
    bluuberrylibrary.interactions.registration
